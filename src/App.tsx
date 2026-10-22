@@ -1,279 +1,425 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
 
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'motion/react';
-import { 
-  ArrowUpRight, 
-  Github, 
-  Linkedin, 
-  Mail, 
-  Code2, 
-  Cpu, 
+import { motion } from 'motion/react';
+import {
+  ArrowUpRight,
+  Github,
+  Linkedin,
+  Mail,
+  Code2,
+  Cpu,
   ChevronDown,
   Layers,
   Zap,
-  Shield,
   FileText,
   Award,
   BookOpen,
   Calendar,
-  ExternalLink,
-  Monitor,
   Terminal,
   Database,
-  Globe
+  GraduationCap,
+  BrainCircuit,
+  Search,
+  Workflow,
 } from 'lucide-react';
-import { PROJECTS, SKILLS, EXPERIENCES, CERTIFICATIONS, SOCIAL_LINKS } from './constants';
-import { useRef, useEffect } from 'react';
+import {
+  PROJECTS,
+  SKILLS,
+  EXPERIENCES,
+  CERTIFICATIONS,
+  SOCIAL_LINKS,
+} from './constants';
 import { ParticlesBackground } from './components/ParticlesBackground';
 
+const resumeUrl =
+  'https://drive.google.com/file/d/1HHhkYyc3p9qGfXxyeX2i08CrR4i5MP1R/view?usp=drivesdk';
+
 export default function App() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
+  const skillGroups = [
+    {
+      icon: Terminal,
+      label: 'Programming',
+      category: 'Frontend' as const,
+    },
+    {
+      icon: Cpu,
+      label: 'Data Science & ML',
+      category: 'Backend' as const,
+    },
+    {
+      icon: BrainCircuit,
+      label: 'Generative AI & RAG',
+      category: 'Design' as const,
+    },
+    {
+      icon: Database,
+      label: 'Tools & Frameworks',
+      category: 'Tools' as const,
+    },
+  ];
 
-  const opacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.05], [1, 0.95]);
-
-  // Parallax background effect
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { damping: 50, stiffness: 200 });
-  const springY = useSpring(mouseY, { damping: 50, stiffness: 200 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const moveX = (clientX - window.innerWidth / 2) / 50;
-      const moveY = (clientY - window.innerHeight / 2) / 50;
-      mouseX.set(moveX);
-      mouseY.set(moveY);
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  const resumeUrl = "https://drive.google.com/file/d/1HHhkYyc3p9qGfXxyeX2i08CrR4i5MP1R/view?usp=drivesdk";
+  const highlights = [
+    {
+      icon: BrainCircuit,
+      title: 'Generative AI & RAG',
+      description:
+        'Retrieval pipelines, embeddings, semantic search and LLM-based applications.',
+    },
+    {
+      icon: Search,
+      title: 'Hybrid Retrieval',
+      description:
+        'Combining BM25 keyword search and vector similarity to find relevant information.',
+    },
+    {
+      icon: Workflow,
+      title: 'AI Workflows',
+      description:
+        'Exploring workflow orchestration, retrieval and evaluation with LangChain and LangGraph.',
+    },
+    {
+      icon: Code2,
+      title: 'Problem Solving',
+      description:
+        'Programming fundamentals, data structures, algorithms and structured problem solving.',
+    },
+  ];
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-bg text-white selection:bg-accent selection:text-white">
+    <div className="relative min-h-screen overflow-x-hidden bg-bg text-white">
       <ParticlesBackground />
-      
-      {/* Navigation */}
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl">
-        <div className="glass px-4 sm:px-8 py-4 rounded-full flex justify-center items-center">
-          <div className="flex gap-4 sm:gap-12">
-            {['Work', 'About', 'Skills', 'Contact'].map((item, i) => (
-              <motion.a
+
+      {/* Floating liquid-glass navigation */}
+      <nav className="fixed left-1/2 top-4 z-50 w-[94%] max-w-4xl -translate-x-1/2 sm:top-6">
+        <div className="glass flex items-center justify-center rounded-full px-3 py-4 sm:px-8">
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 sm:gap-x-12">
+            {['Work', 'About', 'Skills', 'Contact'].map((item) => (
+              <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="text-[11px] uppercase tracking-[0.2em] font-bold hover:text-accent transition-colors"
+                className="text-[10px] font-bold uppercase tracking-[0.16em] transition-colors hover:text-accent sm:text-xs sm:tracking-[0.2em]"
               >
                 {item}
-              </motion.a>
+              </a>
             ))}
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative h-screen flex flex-col items-center justify-center px-6 overflow-hidden pt-20">
-        <motion.div 
-          style={{ opacity, scale, x: springX, y: springY }}
-          className="text-center z-10"
+      {/* Hero */}
+      <section
+        id="home"
+        className="relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden px-5 pb-16 pt-32 text-center sm:px-8"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="relative z-10 w-full"
         >
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="mb-10 inline-block"
-          >
-            <span className="glass px-6 py-2 rounded-full text-[11px] uppercase tracking-[0.4em] text-accent font-bold border-accent/20">
-              B.Tech Artificial Intelligence @ SRM IST
-            </span>
-          </motion.div>
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-4xl sm:text-6xl md:text-[9rem] font-bold leading-none mb-12 tracking-tighter"
-          >
-            KANDUKURI <br />
+          <div className="glass mb-8 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-accent sm:text-xs sm:tracking-[0.3em]">
+            <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_rgba(192,132,252,0.8)]" />
+            Artificial Intelligence • SRM IST
+          </div>
+
+          <p className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-muted sm:text-sm">
+            AI / ML · Generative AI · RAG Systems
+          </p>
+
+          <h1 className="mb-8 text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-7xl md:text-8xl lg:text-[7rem]">
+            KANDUKURI
+            <br />
             <span className="text-gradient">MANJUSHA</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="text-muted max-w-2xl mx-auto text-base sm:text-xl leading-relaxed mb-16 font-medium"
-          >
-            Artificial Intelligence Engineering student with strong problem-solving skills 
-            and a passion for developing high-performance software systems.
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
-            className="flex flex-wrap justify-center gap-8"
-          >
-            <a 
-              href={resumeUrl} 
-              target="_blank" 
+          </h1>
+
+          <p className="mx-auto mb-5 max-w-2xl text-base font-medium leading-relaxed text-muted sm:text-xl">
+            Artificial Intelligence student interested in building practical
+            AI systems through machine learning, intelligent retrieval, and
+            Generative AI.
+          </p>
+
+          <div className="mb-10 flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-muted sm:gap-5 sm:text-sm">
+            <span className="inline-flex items-center gap-2">
+              <GraduationCap className="h-4 w-4 text-accent" />
+              B.Tech Artificial Intelligence
+            </span>
+            <span className="hidden text-accent sm:inline">•</span>
+            <span>SRM Institute of Science and Technology</span>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <a
+              href={resumeUrl}
+              target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary flex items-center gap-3"
-            >
-              <FileText className="w-5 h-5 text-accent" />
-              <span>View Resume</span>
-            </a>
-            <a 
-              href="#work" 
               className="btn-primary"
             >
-              Explore Projects
+              <FileText className="h-4 w-4" />
+              View Resume
+              <ArrowUpRight className="h-4 w-4" />
             </a>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4 }}
-            className="mt-20"
-          >
-            <ChevronDown className="w-6 h-6 text-accent animate-bounce mx-auto" />
-          </motion.div>
+            <a href="#work" className="btn-secondary">
+              Explore Projects
+              <ArrowUpRight className="h-4 w-4 text-accent" />
+            </a>
+
+            <a
+              href={SOCIAL_LINKS.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary"
+            >
+              <Github className="h-4 w-4" />
+              GitHub
+            </a>
+          </div>
+
+          <div className="mx-auto mt-16 flex max-w-xl flex-wrap justify-center gap-3">
+            {['Machine Learning', 'RAG', 'Embeddings', 'Semantic Search'].map(
+              (item) => (
+                <span
+                  key={item}
+                  className="glass rounded-full px-4 py-2 text-[10px] font-semibold tracking-wide text-muted sm:text-xs"
+                >
+                  {item}
+                </span>
+              ),
+            )}
+          </div>
         </motion.div>
+
+        <a
+          href="#work"
+          aria-label="Scroll to featured projects"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-accent transition-transform hover:translate-y-1"
+        >
+          <ChevronDown className="h-6 w-6 animate-bounce" />
+        </a>
       </section>
 
-      {/* Work Section */}
-      <section id="work" className="py-32 px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-24">
-          <h2 className="text-sm uppercase tracking-[0.4em] text-accent mb-4 font-bold">Portfolio</h2>
-          <p className="text-3xl sm:text-5xl font-bold">Featured Projects</p>
-          <div className="w-20 h-1 bg-accent mx-auto mt-8 rounded-full" />
+      {/* Featured projects */}
+      <section id="work" className="mx-auto max-w-7xl scroll-mt-28 px-6 py-24 sm:py-32">
+        <div className="mb-16 text-center sm:mb-20">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-accent">
+            Selected Work
+          </p>
+          <h2 className="text-3xl font-bold sm:text-5xl">
+            Projects & Applications
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
+            AI-focused projects exploring document retrieval, semantic search,
+            and human-guided knowledge workflows.
+          </p>
+          <div className="mx-auto mt-8 h-1 w-20 rounded-full bg-accent" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {PROJECTS.map((project, i) => (
-            <motion.div
+        <div className="grid grid-cols-1 gap-7 lg:grid-cols-2">
+          {PROJECTS.map((project, index) => (
+            <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group relative"
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="glass glass-hover group flex h-full flex-col rounded-[2rem] p-6 sm:p-9"
             >
-              <div className="glass p-10 rounded-[2.5rem] glass-hover h-full flex flex-col">
-                <div className="w-16 h-16 glass rounded-2xl flex items-center justify-center mb-8 border-accent/20 group-hover:bg-accent/10 transition-colors">
-                  {project.id === 'gym-assistant' ? <Monitor className="w-8 h-8 text-accent" /> : <Layers className="w-8 h-8 text-accent" />}
+              <div className="mb-7 flex items-start justify-between gap-4">
+                <div className="glass flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-accent/20">
+                  {index === 0 ? (
+                    <Search className="h-7 w-7 text-accent" />
+                  ) : (
+                    <Layers className="h-7 w-7 text-accent" />
+                  )}
                 </div>
-                <h3 className="text-3xl font-bold mb-4">{project.title}</h3>
-                <p className="text-muted leading-relaxed mb-8 flex-grow font-medium">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-3 mt-auto">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="text-[10px] uppercase tracking-widest text-accent glass px-4 py-1.5 rounded-full border-accent/10 font-bold">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <span className="rounded-full border border-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-muted">
+                  Project 0{index + 1}
+                </span>
               </div>
-            </motion.div>
+
+              <h3 className="mb-4 text-2xl font-bold leading-tight sm:text-3xl">
+                {project.title}
+              </h3>
+
+              <p className="mb-8 flex-grow text-sm leading-7 text-muted sm:text-base">
+                {project.description}
+              </p>
+
+              <div className="mb-7 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-accent/15 bg-accent/[0.06] px-3 py-1.5 text-[10px] font-semibold tracking-wide text-accent sm:text-xs"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-fit items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-white transition-colors hover:text-accent"
+                >
+                  GitHub Profile
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+              )}
+            </motion.article>
           ))}
         </div>
       </section>
 
-      {/* About & Experience Section */}
-      <section id="about" className="py-32 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-24 items-start">
+      {/* About and education */}
+      <section
+        id="about"
+        className="relative scroll-mt-28 overflow-hidden px-6 py-24 sm:py-32"
+      >
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center gap-4 mb-8">
-              <h2 className="text-sm uppercase tracking-[0.4em] text-accent font-bold">About Me</h2>
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                <span className="text-[10px] uppercase tracking-widest text-emerald-500 font-bold">Open for Opportunities</span>
-              </div>
-            </div>
-            <p className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-10">
-              Building <span className="text-accent">intelligent</span> systems with clean architecture.
+            <p className="mb-5 text-xs font-bold uppercase tracking-[0.35em] text-accent">
+              About Me
             </p>
-            <p className="text-muted leading-relaxed mb-12 text-base sm:text-lg font-medium">
-              I am an AI student at SRM IST with a solid understanding of data structures, 
-              algorithms, and object-oriented programming. I aim to contribute to 
-              high-performance software systems through innovative solutions.
+
+            <h2 className="mb-7 text-3xl font-bold leading-tight sm:text-5xl">
+              Turning AI concepts into{' '}
+              <span className="text-gradient">practical systems.</span>
+            </h2>
+
+            <p className="mb-6 text-sm leading-7 text-muted sm:text-base">
+              I am a B.Tech Artificial Intelligence student at SRM Institute of
+              Science and Technology, interested in Machine Learning,
+              Generative AI, and Retrieval-Augmented Generation. My project
+              work explores hybrid retrieval with BM25 and semantic embeddings,
+              ChromaDB-based document retrieval, and AI workflow orchestration.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {[
-                { icon: Zap, title: 'AI & ML', desc: 'Computer vision and predictive models.' },
-                { icon: Layers, title: 'IoT', desc: 'Hardware-software integration.' },
-                { icon: Shield, title: 'Full Stack', desc: 'End-to-end web applications.' },
-                { icon: Code2, title: 'Algorithms', desc: 'Efficient problem solving.' },
-              ].map((item, i) => (
-                <div key={i} className="glass p-8 rounded-3xl border-white/5">
-                  <item.icon className="w-6 h-6 text-accent mb-6" />
-                  <h4 className="text-sm font-bold mb-3 uppercase tracking-widest">{item.title}</h4>
-                  <p className="text-xs text-muted leading-relaxed font-medium">{item.desc}</p>
+
+            <p className="mb-10 text-sm leading-7 text-muted sm:text-base">
+              I enjoy breaking complex problems into manageable steps,
+              understanding how systems work, and building solutions that
+              connect data processing, retrieval, and language models.
+            </p>
+
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary"
+            >
+              <FileText className="h-4 w-4 text-accent" />
+              Review My Resume
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {highlights.map((item) => (
+                <div
+                  key={item.title}
+                  className="glass glass-hover rounded-2xl p-5"
+                >
+                  <item.icon className="mb-4 h-6 w-6 text-accent" />
+                  <h3 className="mb-2 text-sm font-bold">{item.title}</h3>
+                  <p className="text-xs leading-6 text-muted">
+                    {item.description}
+                  </p>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          <div className="space-y-12">
+          <div className="space-y-10">
             <div>
-              <h2 className="text-sm uppercase tracking-[0.4em] text-accent mb-8 font-bold">Experience</h2>
-              {EXPERIENCES.map((exp, i) => (
-                <motion.div
-                  key={exp.company}
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="glass p-10 rounded-[2.5rem] glass-hover"
-                >
-                  <div className="flex justify-between items-start mb-6">
-                    <div>
-                      <h4 className="text-2xl font-bold mb-2">{exp.role}</h4>
-                      <p className="text-xs font-mono text-accent uppercase tracking-[0.2em] font-bold">{exp.company}</p>
-                    </div>
-                    <span className="text-[11px] font-mono text-muted font-bold">{exp.period}</span>
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.3em] text-accent">
+                Education
+              </p>
+
+              <div className="glass glass-hover rounded-3xl p-6 sm:p-8">
+                <div className="mb-5 flex items-start gap-4">
+                  <div className="glass flex h-12 w-12 shrink-0 items-center justify-center rounded-xl">
+                    <GraduationCap className="h-6 w-6 text-accent" />
                   </div>
-                  <p className="text-sm text-muted leading-relaxed font-medium">{exp.description}</p>
-                </motion.div>
-              ))}
+                  <div>
+                    <h3 className="text-lg font-bold">
+                      B.Tech Artificial Intelligence
+                    </h3>
+                    <p className="mt-1 text-sm text-muted">
+                      SRM Institute of Science and Technology, Kattankulathur
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5">
+                  <span className="text-xs font-semibold text-muted">
+                    Expected graduation: 2027
+                  </span>
+                  <span className="rounded-full border border-accent/25 bg-accent/10 px-4 py-2 text-sm font-bold text-accent">
+                    CGPA 9.04 / 10
+                  </span>
+                </div>
+              </div>
             </div>
 
             <div>
-              <h2 className="text-sm uppercase tracking-[0.4em] text-accent mb-8 font-bold">Certifications</h2>
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.3em] text-accent">
+                Experience & Activities
+              </p>
+
               <div className="space-y-4">
-                {CERTIFICATIONS.map((cert, i) => (
-                  <motion.div
-                    key={cert.title}
-                    initial={{ opacity: 0, x: 40 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="glass p-6 rounded-2xl flex items-center gap-6 border-white/5"
+                {EXPERIENCES.map((experience) => (
+                  <div
+                    key={experience.company}
+                    className="glass glass-hover rounded-3xl p-6 sm:p-8"
                   >
-                    <div className="w-12 h-12 glass rounded-xl flex items-center justify-center border-accent/20">
-                      <Award className="w-6 h-6 text-accent" />
+                    <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <h3 className="text-lg font-bold">
+                          {experience.role}
+                        </h3>
+                        <p className="mt-1 text-xs font-semibold text-accent">
+                          {experience.company}
+                        </p>
+                      </div>
+                      <span className="text-xs text-muted">
+                        {experience.period}
+                      </span>
+                    </div>
+                    <p className="text-sm leading-6 text-muted">
+                      {experience.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.3em] text-accent">
+                Certifications
+              </p>
+
+              <div className="space-y-3">
+                {CERTIFICATIONS.map((certification) => (
+                  <div
+                    key={certification.title}
+                    className="glass glass-hover flex items-start gap-4 rounded-2xl p-5"
+                  >
+                    <div className="glass flex h-11 w-11 shrink-0 items-center justify-center rounded-xl">
+                      <Award className="h-5 w-5 text-accent" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold uppercase tracking-widest mb-1">{cert.title}</h4>
-                      <p className="text-xs text-muted font-medium">{cert.issuer} • {cert.date}</p>
+                      <h3 className="text-sm font-bold leading-6">
+                        {certification.title}
+                      </h3>
+                      <p className="mt-1 text-xs text-muted">
+                        {certification.issuer} · {certification.date}
+                      </p>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -281,148 +427,225 @@ export default function App() {
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-32 px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <h2 className="text-sm uppercase tracking-[0.4em] text-accent mb-4 font-bold">Technical Arsenal</h2>
-          <p className="text-3xl sm:text-5xl font-bold">Skills & Expertise</p>
+      {/* Skills */}
+      <section
+        id="skills"
+        className="mx-auto max-w-7xl scroll-mt-28 px-6 py-24 sm:py-32"
+      >
+        <div className="mb-14 text-center sm:mb-20">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-accent">
+            Technical Toolkit
+          </p>
+          <h2 className="text-3xl font-bold sm:text-5xl">
+            Skills & Expertise
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
+            Technologies and concepts relevant to AI engineering, machine
+            learning, retrieval systems, and software development.
+          </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { icon: Terminal, label: 'Languages', items: SKILLS.filter(s => s.category === 'Frontend') },
-            { icon: Cpu, label: 'Frameworks', items: SKILLS.filter(s => s.category === 'Backend') },
-            { icon: BookOpen, label: 'Concepts', items: SKILLS.filter(s => s.category === 'Design') },
-            { icon: Database, label: 'Tools', items: SKILLS.filter(s => s.category === 'Tools') },
-          ].map((cat, i) => (
-            <motion.div
-              key={cat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="p-10 glass rounded-[2.5rem] border-white/5"
-            >
-              <div className="w-12 h-12 glass rounded-xl flex items-center justify-center mb-8 border-accent/20">
-                <cat.icon className="w-6 h-6 text-accent" />
-              </div>
-              <h3 className="text-xl mb-6 font-bold uppercase tracking-widest">{cat.label}</h3>
-              <ul className="space-y-3">
-                {cat.items.map(skill => (
-                  <li key={skill.name} className="text-sm text-muted flex items-center gap-3 font-medium">
-                    <div className="w-1.5 h-1.5 bg-accent rounded-full" />
-                    {skill.name}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {skillGroups.map((group, index) => {
+            const skills = SKILLS.filter(
+              (skill) => skill.category === group.category,
+            );
+
+            return (
+              <motion.div
+                key={group.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: index * 0.08 }}
+                className="glass glass-hover rounded-3xl p-6 sm:p-7"
+              >
+                <div className="glass mb-6 flex h-12 w-12 items-center justify-center rounded-xl border-accent/20">
+                  <group.icon className="h-6 w-6 text-accent" />
+                </div>
+
+                <h3 className="mb-6 text-sm font-bold uppercase leading-6 tracking-wider">
+                  {group.label}
+                </h3>
+
+                <ul className="space-y-3">
+                  {skills.map((skill) => (
+                    <li
+                      key={skill.name}
+                      className="flex items-start gap-3 text-sm leading-5 text-muted"
+                    >
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                      {skill.name}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-32 px-6 text-center relative">
+      {/* Contact */}
+      <section
+        id="contact"
+        className="scroll-mt-28 px-5 py-24 sm:px-6 sm:py-32"
+      >
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-5xl mx-auto glass p-6 sm:p-12 md:p-24 rounded-[2rem] sm:rounded-[4rem] relative overflow-hidden"
+          className="glass relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] p-6 sm:rounded-[3rem] sm:p-12 lg:p-16"
         >
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50" />
-          <h2 className="text-sm uppercase tracking-[0.4em] text-accent mb-10 font-bold">Initiate Connection</h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start text-left">
+          <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-accent to-transparent" />
+
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <p className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-8">
-                Let's build something <span className="text-accent">extraordinary</span> together.
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.35em] text-accent">
+                Contact
               </p>
-              <p className="text-muted text-lg mb-12 font-medium">
-                Whether you have a question or just want to say hi, my inbox is always open.
+              <h2 className="mb-6 text-3xl font-bold leading-tight sm:text-5xl">
+                Let's connect and build something{' '}
+                <span className="text-gradient">meaningful.</span>
+              </h2>
+              <p className="mb-8 max-w-lg text-sm leading-7 text-muted sm:text-base">
+                Open to conversations about AI, machine learning, Generative AI
+                projects, internships, and entry-level opportunities.
               </p>
-              
-              <div className="flex flex-col gap-6">
-                <a 
-                  href={SOCIAL_LINKS.calendly}
+
+              <a
+                href={`mailto:${SOCIAL_LINKS.email}`}
+                className="btn-primary"
+              >
+                <Mail className="h-4 w-4" />
+                Contact Me
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={SOCIAL_LINKS.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary flex items-center justify-center gap-3 w-full sm:w-fit"
+                  aria-label="GitHub"
+                  className="glass glass-hover flex h-12 w-12 items-center justify-center rounded-full"
                 >
-                  <Calendar className="w-5 h-5" />
-                  <span>Schedule Meeting</span>
+                  <Github className="h-5 w-5 text-accent" />
                 </a>
-                <div className="flex gap-6">
-                  {[
-                    { icon: Github, href: SOCIAL_LINKS.github },
-                    { icon: Linkedin, href: SOCIAL_LINKS.linkedin },
-                    { icon: Mail, href: `mailto:${SOCIAL_LINKS.email}` }
-                  ].map((social, i) => (
-                    <a 
-                      key={i}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 glass rounded-full flex items-center justify-center hover:border-accent/50 hover:bg-accent/10 transition-all"
-                    >
-                      <social.icon className="w-5 h-5 text-muted hover:text-accent transition-colors" />
-                    </a>
-                  ))}
-                </div>
+                <a
+                  href={SOCIAL_LINKS.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="glass glass-hover flex h-12 w-12 items-center justify-center rounded-full"
+                >
+                  <Linkedin className="h-5 w-5 text-accent" />
+                </a>
+                <a
+                  href={`mailto:${SOCIAL_LINKS.email}`}
+                  aria-label="Email"
+                  className="glass glass-hover flex h-12 w-12 items-center justify-center rounded-full"
+                >
+                  <Mail className="h-5 w-5 text-accent" />
+                </a>
               </div>
+
+              <p className="mt-5 break-all text-sm text-muted">
+                {SOCIAL_LINKS.email}
+              </p>
             </div>
 
-            <form 
-              onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.currentTarget);
-                const email = formData.get('email');
-                const message = formData.get('message');
-                window.location.href = `mailto:${SOCIAL_LINKS.email}?subject=Portfolio Contact from ${email}&body=${message}`;
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                const formData = new FormData(event.currentTarget);
+                const email = String(formData.get('email') || '');
+                const message = String(formData.get('message') || '');
+                const subject = encodeURIComponent(
+                  `Portfolio enquiry from ${email}`,
+                );
+                const body = encodeURIComponent(
+                  `Reply to: ${email}\n\n${message}`,
+                );
+                window.location.href = `mailto:${SOCIAL_LINKS.email}?subject=${subject}&body=${body}`;
               }}
-              className="space-y-6"
+              className="space-y-5"
             >
-              <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-accent font-bold ml-4">Your Email</label>
-                <input 
+              <div>
+                <label
+                  htmlFor="contact-email"
+                  className="mb-2 ml-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-accent"
+                >
+                  Your email
+                </label>
+                <input
+                  id="contact-email"
                   name="email"
-                  type="email" 
+                  type="email"
                   required
-                  placeholder="hello@example.com"
-                  className="w-full glass px-6 py-4 rounded-2xl focus:outline-none focus:border-accent/50 transition-all font-medium"
+                  placeholder="you@example.com"
+                  className="glass w-full rounded-2xl px-5 py-4 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-accent/50"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-accent font-bold ml-4">Your Message</label>
-                <textarea 
+
+              <div>
+                <label
+                  htmlFor="contact-message"
+                  className="mb-2 ml-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-accent"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="contact-message"
                   name="message"
                   required
-                  rows={4}
-                  placeholder="Tell me about your project..."
-                  className="w-full glass px-6 py-4 rounded-2xl focus:outline-none focus:border-accent/50 transition-all font-medium resize-none"
+                  rows={5}
+                  placeholder="Write your message..."
+                  className="glass w-full resize-y rounded-2xl px-5 py-4 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-accent/50"
                 />
               </div>
-              <button type="submit" className="btn-secondary w-full flex items-center justify-center gap-3">
-                <Mail className="w-5 h-5 text-accent" />
-                <span>Send Message</span>
+
+              <button type="submit" className="btn-secondary w-full">
+                <Mail className="h-4 w-4 text-accent" />
+                Prepare Email
+                <ArrowUpRight className="h-4 w-4" />
               </button>
+
+              <p className="text-xs leading-5 text-muted">
+                This opens your default email application with your message
+                prepared. It does not send the email automatically.
+              </p>
             </form>
           </div>
         </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 border-t border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-          <div className="flex flex-col items-center md:items-start gap-3">
-            <p className="text-sm font-bold text-accent tracking-[0.3em] uppercase">KANDUKURI MANJUSHA</p>
-            <p className="text-[11px] text-muted uppercase tracking-[0.2em] font-bold">SRM IST • CLASS OF 2027</p>
+      <footer className="border-t border-white/[0.08] px-6 py-8 sm:py-10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent">
+              Kandukuri Manjusha
+            </p>
+            <p className="mt-2 text-xs text-muted">
+              B.Tech Artificial Intelligence · SRM IST · Class of 2027
+            </p>
           </div>
-          <div className="flex gap-12 text-[11px] uppercase tracking-[0.2em] text-muted font-bold">
-            <a href="#" className="hover:text-accent transition-colors">Privacy</a>
-            <a href="#" className="hover:text-accent transition-colors">Terms</a>
-            <a href="#" className="hover:text-accent transition-colors">Connect</a>
+
+          <div className="flex flex-wrap justify-center gap-5 text-xs font-semibold text-muted">
+            <a href="#home" className="transition-colors hover:text-accent">
+              Back to top
+            </a>
+            <a href="#work" className="transition-colors hover:text-accent">
+              Projects
+            </a>
+            <a href="#contact" className="transition-colors hover:text-accent">
+              Contact
+            </a>
           </div>
-          <div className="text-[11px] text-muted uppercase tracking-[0.2em] text-right font-bold">
-            Built with <br /> <span className="text-white">React & Tailwind</span>
-          </div>
+
+          <p className="text-xs text-muted">
+            Built with React, TypeScript & Tailwind CSS
+          </p>
         </div>
       </footer>
     </div>
