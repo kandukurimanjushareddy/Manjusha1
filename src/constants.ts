@@ -6,8 +6,15 @@ export const PROJECTS: Project[] = [
     id: 'rag-resume-matching',
     title: 'RAG-Based Resume & Job Profile Matching System',
     description:
-      'Developed a resume and job-description matching approach using Retrieval-Augmented Generation (RAG). The pipeline parses PDF, DOCX, and TXT documents into section-aware chunks, creates 384-dimensional embeddings with Sentence Transformers, and stores them in ChromaDB. Hybrid retrieval combines BM25 keyword search and semantic vector similarity to identify relevant candidate information for structured LLM-based matching.',
-    tags: ['Python', 'RAG', 'ChromaDB', 'BM25', 'Sentence Transformers', 'Embeddings'],
+      'Built a Retrieval-Augmented Generation system for matching resumes with job descriptions. The pipeline parses PDF, DOCX, and TXT files into section-aware chunks, generates 384-dimensional embeddings using Sentence Transformers, and stores them in ChromaDB. Hybrid retrieval combines BM25 keyword search with semantic vector similarity to retrieve relevant candidate information for structured LLM-based matching.',
+    tags: [
+      'Python',
+      'Sentence Transformers',
+      'ChromaDB',
+      'BM25',
+      'Embeddings',
+      'RAG',
+    ],
     image: '',
     link: 'https://github.com/kandukurimanjushareddy',
   },
@@ -16,7 +23,14 @@ export const PROJECTS: Project[] = [
     title: 'LocalAI — Human-in-the-Loop Hyperlocal AI Knowledge Platform',
     description:
       'Designed a hyperlocal AI knowledge platform for questions involving rapidly changing local information. The proposed workflow uses LangGraph for query classification, retrieval, and human verification when information is missing or outdated. The architecture incorporates LangChain, Sentence Transformer embeddings, ChromaDB, RAG, and LangSmith for workflow tracing and evaluation.',
-    tags: ['Python', 'LangChain', 'LangGraph', 'LangSmith', 'ChromaDB', 'RAG'],
+    tags: [
+      'Python',
+      'LangChain',
+      'LangGraph',
+      'LangSmith',
+      'ChromaDB',
+      'RAG',
+    ],
     image: '',
     link: 'https://github.com/kandukurimanjushareddy',
   },
@@ -41,7 +55,7 @@ export const SKILLS: Skill[] = [
   { name: 'Decision Trees', category: 'Backend' },
   { name: 'Model Training & Validation', category: 'Backend' },
 
-  // Generative AI and retrieval concepts
+  // Generative AI and retrieval
   { name: 'NLP', category: 'Design' },
   { name: 'LLMs', category: 'Design' },
   { name: 'Prompt Engineering', category: 'Design' },
@@ -70,7 +84,7 @@ export const EXPERIENCES: Experience[] = [
     role: 'Event Organizing Volunteer',
     period: 'Feb 2025',
     description:
-      'Assisted in organizing SRM Milan, coordinating logistics and event operations. Collaborated with cross-functional teams to manage schedules and registrations.',
+      'Assisted in organizing SRM Milan, coordinating logistics and event operations. Collaborated with teams to manage schedules and registrations.',
   },
 ];
 
