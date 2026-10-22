@@ -6,68 +6,55 @@ export const PROJECTS: Project[] = [
     id: 'rag-resume-matching',
     title: 'RAG-Based Resume & Job Profile Matching System',
     description:
-      'Built a Retrieval-Augmented Generation (RAG) system to match resumes with job descriptions. Parses PDF, DOCX, and TXT resumes into section-aware chunks, generates 384-dimensional embeddings using Sentence Transformers, and stores them in ChromaDB. Combines BM25 keyword search with semantic vector search to retrieve relevant candidate information and provide structured, LLM-based candidate-job matching.',
-    tags: [
-      'Python',
-      'Sentence Transformers',
-      'ChromaDB',
-      'BM25',
-      'Embeddings',
-      'RAG',
-    ],
+      'Developed a resume and job-description matching approach using Retrieval-Augmented Generation (RAG). The pipeline parses PDF, DOCX, and TXT documents into section-aware chunks, creates 384-dimensional embeddings with Sentence Transformers, and stores them in ChromaDB. Hybrid retrieval combines BM25 keyword search and semantic vector similarity to identify relevant candidate information for structured LLM-based matching.',
+    tags: ['Python', 'RAG', 'ChromaDB', 'BM25', 'Sentence Transformers', 'Embeddings'],
     image: '',
+    link: 'https://github.com/kandukurimanjushareddy',
   },
   {
     id: 'localai',
     title: 'LocalAI — Human-in-the-Loop Hyperlocal AI Knowledge Platform',
     description:
-      'Designed a hyperlocal AI knowledge platform for questions involving rapidly changing local information. Uses LangGraph to orchestrate query classification, retrieval, and human verification when information is missing or outdated. Integrates LangChain-based retrieval, Sentence Transformer embeddings, ChromaDB, RAG, and LangSmith for tracing and evaluation.',
-    tags: [
-      'Python',
-      'LangChain',
-      'LangGraph',
-      'LangSmith',
-      'FastAPI',
-      'ChromaDB',
-      'RAG',
-    ],
+      'Designed a hyperlocal AI knowledge platform for questions involving rapidly changing local information. The proposed workflow uses LangGraph for query classification, retrieval, and human verification when information is missing or outdated. The architecture incorporates LangChain, Sentence Transformer embeddings, ChromaDB, RAG, and LangSmith for workflow tracing and evaluation.',
+    tags: ['Python', 'LangChain', 'LangGraph', 'LangSmith', 'ChromaDB', 'RAG'],
     image: '',
+    link: 'https://github.com/kandukurimanjushareddy',
   },
 ];
 
 export const SKILLS: Skill[] = [
-  // Programming Languages
-  { name: 'Python', category: 'Programming' },
-  { name: 'SQL', category: 'Programming' },
-  { name: 'C++', category: 'Programming' },
-  { name: 'Java', category: 'Programming' },
+  // Programming languages
+  { name: 'Python', category: 'Frontend' },
+  { name: 'SQL', category: 'Frontend' },
+  { name: 'C++', category: 'Frontend' },
+  { name: 'Java', category: 'Frontend' },
 
-  // Data Science and Machine Learning
-  { name: 'Pandas', category: 'Data Science' },
-  { name: 'NumPy', category: 'Data Science' },
-  { name: 'Matplotlib', category: 'Data Science' },
-  { name: 'Scikit-learn', category: 'Data Science' },
-  { name: 'Data Cleaning', category: 'Data Science' },
-  { name: 'Feature Engineering', category: 'Data Science' },
-  { name: 'Regression', category: 'Data Science' },
-  { name: 'Classification', category: 'Data Science' },
-  { name: 'Decision Trees', category: 'Data Science' },
-  { name: 'Model Training & Validation', category: 'Data Science' },
+  // Data science and machine learning
+  { name: 'Pandas', category: 'Backend' },
+  { name: 'NumPy', category: 'Backend' },
+  { name: 'Matplotlib', category: 'Backend' },
+  { name: 'Scikit-learn', category: 'Backend' },
+  { name: 'Data Cleaning', category: 'Backend' },
+  { name: 'Feature Engineering', category: 'Backend' },
+  { name: 'Regression', category: 'Backend' },
+  { name: 'Classification', category: 'Backend' },
+  { name: 'Decision Trees', category: 'Backend' },
+  { name: 'Model Training & Validation', category: 'Backend' },
 
-  // Generative AI and Retrieval
-  { name: 'NLP', category: 'Generative AI' },
-  { name: 'LLMs', category: 'Generative AI' },
-  { name: 'Prompt Engineering', category: 'Generative AI' },
-  { name: 'Embeddings', category: 'Generative AI' },
-  { name: 'Semantic Search', category: 'Generative AI' },
-  { name: 'BM25', category: 'Generative AI' },
-  { name: 'RAG', category: 'Generative AI' },
-  { name: 'Vector Databases', category: 'Generative AI' },
-  { name: 'LangChain', category: 'Generative AI' },
-  { name: 'LangGraph', category: 'Generative AI' },
-  { name: 'LangSmith', category: 'Generative AI' },
+  // Generative AI and retrieval concepts
+  { name: 'NLP', category: 'Design' },
+  { name: 'LLMs', category: 'Design' },
+  { name: 'Prompt Engineering', category: 'Design' },
+  { name: 'Embeddings', category: 'Design' },
+  { name: 'Semantic Search', category: 'Design' },
+  { name: 'BM25', category: 'Design' },
+  { name: 'RAG', category: 'Design' },
+  { name: 'Vector Databases', category: 'Design' },
+  { name: 'LangChain', category: 'Design' },
+  { name: 'LangGraph', category: 'Design' },
+  { name: 'LangSmith', category: 'Design' },
 
-  // Tools and Frameworks
+  // Tools and frameworks
   { name: 'ChromaDB', category: 'Tools' },
   { name: 'Sentence Transformers', category: 'Tools' },
   { name: 'FastAPI', category: 'Tools' },
