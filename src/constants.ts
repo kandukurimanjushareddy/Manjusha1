@@ -1,50 +1,80 @@
+
 import { Project, Skill, Experience } from './types';
 
 export const PROJECTS: Project[] = [
   {
-    id: 'ai-cli',
-    title: 'AI-Assisted CLI',
-    description: 'An AI-assisted Command Line Interface tool that interprets natural language input and converts it into executable system commands using NLP APIs.',
-    tags: ['Python', 'OpenAI API', 'CLI', 'NLP'],
+    id: 'rag-resume-matching',
+    title: 'RAG-Based Resume & Job Profile Matching System',
+    description:
+      'Built a Retrieval-Augmented Generation (RAG) system to match resumes with job descriptions. Parses PDF, DOCX, and TXT resumes into section-aware chunks, generates 384-dimensional embeddings using Sentence Transformers, and stores them in ChromaDB. Combines BM25 keyword search with semantic vector search to retrieve relevant candidate information and provide structured, LLM-based candidate-job matching.',
+    tags: [
+      'Python',
+      'Sentence Transformers',
+      'ChromaDB',
+      'BM25',
+      'Embeddings',
+      'RAG',
+    ],
     image: '',
   },
   {
-    id: 'herbal-garden',
-    title: 'Herbal Garden Platform',
-    description: 'A full-stack educational management system using Java backend and MySQL database following MVC architecture with role-based access control.',
-    tags: ['Java', 'MySQL', 'HTML', 'CSS', 'JDBC'],
-    image: '',
-  },
-  {
-    id: 'food-spoilage',
-    title: 'IoT Food Spoilage Detection',
-    description: 'Real-time IoT-based food spoilage detection system integrating hardware sensors with Python-based data processing for environmental monitoring.',
-    tags: ['Python', 'Raspberry Pi', 'Sensors', 'IoT'],
+    id: 'localai',
+    title: 'LocalAI — Human-in-the-Loop Hyperlocal AI Knowledge Platform',
+    description:
+      'Designed a hyperlocal AI knowledge platform for questions involving rapidly changing local information. Uses LangGraph to orchestrate query classification, retrieval, and human verification when information is missing or outdated. Integrates LangChain-based retrieval, Sentence Transformer embeddings, ChromaDB, RAG, and LangSmith for tracing and evaluation.',
+    tags: [
+      'Python',
+      'LangChain',
+      'LangGraph',
+      'LangSmith',
+      'FastAPI',
+      'ChromaDB',
+      'RAG',
+    ],
     image: '',
   },
 ];
 
 export const SKILLS: Skill[] = [
-  { name: 'Python', category: 'Frontend' },
-  { name: 'Java', category: 'Frontend' },
-  { name: 'JavaScript', category: 'Frontend' },
-  { name: 'TypeScript', category: 'Frontend' },
-  { name: 'Rust', category: 'Frontend' },
-  { name: 'React', category: 'Backend' },
-  { name: 'Node.js', category: 'Backend' },
-  { name: 'Next.js', category: 'Backend' },
-  { name: 'Express.js', category: 'Backend' },
-  { name: 'FastAPI', category: 'Backend' },
-  { name: 'TensorFlow', category: 'Backend' },
-  { name: 'MySQL', category: 'Tools' },
-  { name: 'PostgreSQL', category: 'Tools' },
-  { name: 'MongoDB', category: 'Tools' },
-  { name: 'Docker', category: 'Tools' },
+  // Programming Languages
+  { name: 'Python', category: 'Programming' },
+  { name: 'SQL', category: 'Programming' },
+  { name: 'C++', category: 'Programming' },
+  { name: 'Java', category: 'Programming' },
+
+  // Data Science and Machine Learning
+  { name: 'Pandas', category: 'Data Science' },
+  { name: 'NumPy', category: 'Data Science' },
+  { name: 'Matplotlib', category: 'Data Science' },
+  { name: 'Scikit-learn', category: 'Data Science' },
+  { name: 'Data Cleaning', category: 'Data Science' },
+  { name: 'Feature Engineering', category: 'Data Science' },
+  { name: 'Regression', category: 'Data Science' },
+  { name: 'Classification', category: 'Data Science' },
+  { name: 'Decision Trees', category: 'Data Science' },
+  { name: 'Model Training & Validation', category: 'Data Science' },
+
+  // Generative AI and Retrieval
+  { name: 'NLP', category: 'Generative AI' },
+  { name: 'LLMs', category: 'Generative AI' },
+  { name: 'Prompt Engineering', category: 'Generative AI' },
+  { name: 'Embeddings', category: 'Generative AI' },
+  { name: 'Semantic Search', category: 'Generative AI' },
+  { name: 'BM25', category: 'Generative AI' },
+  { name: 'RAG', category: 'Generative AI' },
+  { name: 'Vector Databases', category: 'Generative AI' },
+  { name: 'LangChain', category: 'Generative AI' },
+  { name: 'LangGraph', category: 'Generative AI' },
+  { name: 'LangSmith', category: 'Generative AI' },
+
+  // Tools and Frameworks
+  { name: 'ChromaDB', category: 'Tools' },
+  { name: 'Sentence Transformers', category: 'Tools' },
+  { name: 'FastAPI', category: 'Tools' },
+  { name: 'Jupyter', category: 'Tools' },
+  { name: 'Google Colab', category: 'Tools' },
   { name: 'Git/GitHub', category: 'Tools' },
-  { name: 'DSA', category: 'Design' },
-  { name: 'Algorithms', category: 'Design' },
-  { name: 'DBMS', category: 'Design' },
-  { name: 'OS', category: 'Design' },
+  { name: 'VS Code', category: 'Tools' },
 ];
 
 export const EXPERIENCES: Experience[] = [
@@ -52,7 +82,8 @@ export const EXPERIENCES: Experience[] = [
     company: 'SRM Institute of Science and Technology',
     role: 'Event Organizing Volunteer',
     period: 'Feb 2025',
-    description: 'Assisted in organizing SRM Milan, coordinating logistics and event operations. Collaborated with cross-functional teams to manage schedules and registrations.',
+    description:
+      'Assisted in organizing SRM Milan, coordinating logistics and event operations. Collaborated with cross-functional teams to manage schedules and registrations.',
   },
 ];
 
@@ -78,5 +109,5 @@ export const SOCIAL_LINKS = {
   github: 'https://github.com/kandukurimanjushareddy',
   linkedin: 'https://www.linkedin.com/in/manjusha-manju-897198295/',
   email: 'km9960@srmist.edu.in',
-  calendly: 'https://calendly.com/kandukurimanjusha/30min'
+  calendly: 'https://calendly.com/kandukurimanjusha/30min',
 };
