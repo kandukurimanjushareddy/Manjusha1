@@ -479,3 +479,242 @@ textarea.glass:focus {
     background: rgba(24, 24, 29, 0.96);
   }
 }
+
+/* ==========================================
+   DYNAMIC LIQUID GLASS MOTION
+   ========================================== */
+
+/* Animated light that flows through glass */
+@keyframes liquidLightFlow {
+  0% {
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: hue-rotate(8deg);
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+  }
+}
+
+/* A moving reflection across glass */
+@keyframes glassReflection {
+  0% {
+    transform: translateX(-150%) skewX(-18deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.65;
+  }
+  65% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateX(250%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+/* Soft floating light inside the glass */
+@keyframes liquidAura {
+  0%, 100% {
+    opacity: 0.25;
+    transform: translate3d(-3%, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: translate3d(3%, -2%, 0) scale(1.08);
+  }
+}
+
+/* Add moving highlights to glass panels */
+.glass {
+  background-size: 220% 220%;
+  animation: liquidLightFlow 14s ease-in-out infinite;
+  transition:
+    backdrop-filter 450ms ease,
+    border-color 450ms ease,
+    box-shadow 450ms ease,
+    background-color 450ms ease;
+}
+
+/* Keep moving light subtle until the user interacts */
+.glass:hover {
+  animation-duration: 5s;
+  border-color: rgba(255, 255, 255, 0.27);
+  backdrop-filter: blur(36px) saturate(195%);
+  -webkit-backdrop-filter: blur(36px) saturate(195%);
+}
+
+/* Flowing light streak on buttons */
+.btn-primary::after,
+.btn-secondary::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -45%;
+  width: 35%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.32),
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transform: skewX(-18deg);
+  opacity: 0;
+}
+
+/* A continuous slow shimmer on the primary button */
+.btn-primary::after {
+  animation: glassReflection 5s ease-in-out infinite;
+}
+
+/* Secondary buttons reveal the reflection on hover */
+.btn-secondary:hover::after {
+  animation: glassReflection 1.1s ease-out forwards;
+  opacity: 1;
+}
+
+/* More liquid-like movement when pressing buttons */
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(0.97);
+  transition: transform 120ms ease;
+}
+
+/* Moving glow behind the hero */
+#home::before {
+  content: "";
+  position: absolute;
+  width: min(80vw, 750px);
+  height: min(80vw, 750px);
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 30% 40%,
+      rgba(147, 51, 234, 0.13),
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 70% 55%,
+      rgba(56, 189, 248, 0.075),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 55% 75%,
+      rgba(236, 72, 153, 0.07),
+      transparent 42%
+    );
+  filter: blur(45px);
+  animation: liquidAura 10s ease-in-out infinite;
+}
+
+/* Smooth reveal and depth while scrolling */
+@supports (animation-timeline: view()) {
+  #work article,
+  #about .glass,
+  #skills .glass {
+    animation: liquidScrollReveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+
+  @keyframes liquidScrollReveal {
+    from {
+      opacity: 0.55;
+      transform: translateY(26px) scale(0.985);
+      filter: blur(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+}
+
+/* Navigation reflection */
+nav .glass {
+  background-size: 250% 250%;
+  animation: liquidLightFlow 12s ease-in-out infinite;
+}
+
+nav .glass:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    0 12px 40px rgba(0, 0, 0, 0.32),
+    0 0 30px rgba(192, 132, 252, 0.08);
+}
+
+/* Glass project cards: subtle floating glow */
+#work article {
+  transform-origin: center;
+  transition:
+    transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 400ms ease,
+    box-shadow 400ms ease;
+}
+
+#work article:hover {
+  transform: translateY(-7px) scale(1.008);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    0 24px 60px rgba(0, 0, 0, 0.3),
+    0 0 35px rgba(192, 132, 252, 0.11);
+}
+
+/* Smooth transitions for skill chips */
+#skills .glass li {
+  transition:
+    transform 250ms ease,
+    color 250ms ease;
+}
+
+#skills .glass li:hover {
+  transform: translateX(4px);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Disable intensive effects for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glass,
+  nav .glass,
+  #home::before,
+  .btn-primary::after,
+  .btn-secondary::after {
+    animation: none !important;
+  }
+
+  #work article,
+  #about .glass,
+  #skills .glass {
+    animation: none !important;
+    filter: none !important;
+  }
+}
+
+/* Keep mobile performance reasonable */
+@media (max-width: 640px) {
+  .glass {
+    animation-duration: 20s;
+  }
+
+  #home::before {
+    filter: blur(30px);
+  }
+
+  #work article:hover {
+    transform: translateY(-2px);
+  }
+}
