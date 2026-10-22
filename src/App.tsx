@@ -57,7 +57,7 @@ export default function App() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  const resumeUrl = "https://drive.google.com/file/d/1kt2Co5AfuXcxrYiIbwAkfE7jvTMsy6Jv/view?usp=drivesdk";
+  const resumeUrl = "https://drive.google.com/file/d/1HHhkYyc3p9qGfXxyeX2i08CrR4i5MP1R/view?usp=drivesdk";
 
   return (
     <div ref={containerRef} className="relative min-h-screen bg-bg text-white selection:bg-accent selection:text-white">
